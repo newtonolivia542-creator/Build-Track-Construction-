@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
 
 export default function AdminPage() {
 
@@ -11,16 +12,60 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
-  const handleUpload = () => {
-    console.log({
-      title,
-      location,
-      description,
-      image,
-    });
+  async function handleUpload() {
 
-    alert("Project uploaded!");
-  };
+    if (!image) {
+      alert("Please select an image");
+      return;
+    }
+
+    // Create unique file name
+    const fileName = `${Date.now()}-${image.name}`;
+
+    // Upload image to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from("projects")
+      .upload(fileName, image);
+
+    if (uploadError) {
+      console.log(uploadError);
+      alert("Image upload failed");
+      return;
+    }
+
+    // Get image public URL
+    const { data } = supabase.storage
+      .from("projects")
+      .getPublicUrl(fileName);
+
+    const imageUrl = data.publicUrl;
+
+    // Save project to database
+    const { error } = await supabase
+      .from("projects")
+      .insert([
+        {
+          title,
+          location,
+          description,
+          image: imageUrl,
+        },
+      ]);
+
+    if (error) {
+      console.log(error);
+      alert("Database save failed");
+    } else {
+
+      alert("Project uploaded successfully!");
+
+      // Reset form
+      setTitle("");
+      setLocation("");
+      setDescription("");
+      setImage(null);
+    }
+  }
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -43,49 +88,50 @@ export default function AdminPage() {
       {/* DASHBOARD */}
       <section className="max-w-7xl mx-auto px-6 pb-24">
 
-      <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
 
-    {/* CARD 1 */}
-    <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
+          {/* CARD 1 */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
 
-        <h2 className="text-3xl font-bold">
-            Total Projects
-        </h2>
-
-        <p className="text-5xl font-bold text-orange-500 mt-6">
-            12
-        </p>
-
-        </div>
-
-        {/* CARD 2 */}
-    <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
-
-        <h2 className="text-3xl font-bold">
-            Messages
-        </h2>
+            <h2 className="text-3xl font-bold">
+              Total Projects
+            </h2>
 
             <p className="text-5xl font-bold text-orange-500 mt-6">
-                8
+              12
             </p>
 
-        </div>
+          </div>
 
-        {/* CARD 3 */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
+          {/* CARD 2 */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
 
-                <h2 className="text-3xl font-bold">
-                    Active Clients
-                </h2>
+            <h2 className="text-3xl font-bold">
+              Messages
+            </h2>
 
             <p className="text-5xl font-bold text-orange-500 mt-6">
-                5
+              8
             </p>
+
+          </div>
+
+          {/* CARD 3 */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
+
+            <h2 className="text-3xl font-bold">
+              Active Clients
+            </h2>
+
+            <p className="text-5xl font-bold text-orange-500 mt-6">
+              5
+            </p>
+
+          </div>
 
         </div>
 
-    </div>
-        {/* ADD PROJECT SECTION */}
+        {/* ADD PROJECT */}
         <div className="mt-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-10 shadow-2xl">
 
           <h2 className="text-4xl font-bold mb-8">

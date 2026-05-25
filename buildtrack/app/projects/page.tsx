@@ -1,37 +1,16 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
+import { supabase } from "@/lib/supabase";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
 
-  const projects = [
-    {
-      title: "Luxury Bedroom Remodel",
-      location: "Sioux City, Iowa",
-      image:
-        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Modern luxury bedroom renovation with premium interior finishing.",
-    },
+  const { data: projects, error } = await supabase
+    .from("projects")
+    .select("*");
 
-    {
-      title: "Modern Kitchen Upgrade",
-      location: "Omaha, Nebraska",
-      image:
-        "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Complete kitchen redesign with custom cabinets and lighting.",
-    },
-
-    {
-      title: "Commercial Office Space",
-      location: "Des Moines, Iowa",
-      image:
-        "https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Large-scale office construction with modern architecture.",
-    },
-  ];
+  console.log("PROJECTS:", projects);
+  console.log("ERROR:", error);
 
   return (
     <>
@@ -46,17 +25,16 @@ export default function ProjectsPage() {
           </h1>
 
           <p className="text-zinc-400 text-xl max-w-3xl mx-auto">
-            Explore our ongoing and completed construction projects with
-            transparency and real-time progress updates.
+            Explore our ongoing and completed construction projects with transparency and real-time progress updates.
           </p>
 
         </section>
 
         <section className="max-w-7xl mx-auto grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-          {projects.map((project, index) => (
+          {projects?.map((project) => (
             <ProjectCard
-              key={index}
+              key={project.id}
               title={project.title}
               location={project.location}
               image={project.image}
