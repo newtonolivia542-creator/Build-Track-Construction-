@@ -1,7 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
-import { supabase } from "@/lib/supabase";
+//import { supabase } from "@/lib/supabase";//
+import { supabase } from "../../lib/supabase";
 
 export default async function ProjectsPage() {
 
