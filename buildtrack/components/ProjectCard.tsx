@@ -43,7 +43,7 @@ type ProjectCardProps = {
         </div>
   
       </div>*/
-    return (
+      return (
         <Link href={`/projects/${id}`}>
           <div className="bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 hover:scale-[1.02] transition duration-300 shadow-2xl cursor-pointer">
       
