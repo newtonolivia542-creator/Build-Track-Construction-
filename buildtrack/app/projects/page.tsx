@@ -34,13 +34,22 @@ export default async function ProjectsPage() {
         <section className="max-w-7xl mx-auto grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
           {projects?.map((project) => (
-            <ProjectCard
+            /*<ProjectCard
               key={project.id}
               title={project.title}
               location={project.location}
               image={project.image}
               description={project.description}
-            />
+            />*/
+
+            <ProjectCard
+            key={project.id}
+            id={project.id}   // 🔴 Red underline here
+            title={project.title}
+            location={project.location}
+            image={project.image}
+            description={project.description}
+          />
           ))}
 
         </section>
