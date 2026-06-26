@@ -77,7 +77,7 @@ async function loadMessages() {
     setClients(data || []);
   }
 }*/
-async function loadClients() {
+/*async function loadClients() {
   const { data, error } = await supabase
     .from("clients")
     .select("*");
@@ -91,7 +91,7 @@ async function loadClients() {
   }
 
   setClients(data || []);
-}
+}*/
 //========DELETE PROJECT FUNCTION ==========//
 
       async function deleteProject(id: number) {
@@ -343,7 +343,7 @@ function startEdit(project: any) {
             </h2>
 
             <p className="text-5xl font-bold text-orange-500 mt-6">
-              8
+            {messages.length}
             </p>
 
           </div>
