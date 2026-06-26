@@ -19,6 +19,8 @@ export default function AdminPage() {
   const [editTitle, setEditTitle] = useState("");
   const [editLocation, setEditLocation] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [messages, setMessages] = useState<any[]>([]);
+  const [clients, setClients] = useState<any[]>([]);
 
   //=========LOADPROJECT FUNCTION =======//
 
@@ -41,8 +43,55 @@ export default function AdminPage() {
 
   useEffect(() => {
     loadProjects();
+    
+    loadMessages();
+    //loadClients();
   }, []);
+//=======LoadMessage=========//
 
+async function loadMessages() {
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    alert(error.message);
+    console.error(error);
+  } else {
+    setMessages(data || []);
+  }
+}
+
+//======aloadClients===========//
+
+/*async function loadClients() {
+  const { data, error } = await supabase
+    .from("clients")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.error(error);
+  } else {
+    setClients(data || []);
+  }
+}*/
+async function loadClients() {
+  const { data, error } = await supabase
+    .from("clients")
+    .select("*");
+
+  console.log("Clients data:", data);
+  console.log("Clients error:", error);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  setClients(data || []);
+}
 //========DELETE PROJECT FUNCTION ==========//
 
       async function deleteProject(id: number) {
@@ -307,7 +356,7 @@ function startEdit(project: any) {
             </h2>
 
             <p className="text-5xl font-bold text-orange-500 mt-6">
-              5
+            {clients.length}
             </p>
 
           </div>
