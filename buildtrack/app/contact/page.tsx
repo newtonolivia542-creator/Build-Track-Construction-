@@ -46,7 +46,7 @@ export default function ContactPage() {
     setProjectType("");
     setMessage("");
   }
-  
+
   return (
     <>
       <Navbar />
