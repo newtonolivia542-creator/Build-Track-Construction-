@@ -1,7 +1,52 @@
+"use client";
+
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase } from "@/lib/supabase";
 
 export default function ContactPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [projectType, setProjectType] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function sendMessage() {
+    if (!name || !email || !projectType || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+  
+    setLoading(true);
+  
+    const { error } = await supabase
+      .from("messages")
+      .insert([
+        {
+          name,
+          email,
+          subject: projectType,
+          message,
+          is_read: false,
+        },
+      ]);
+  
+    setLoading(false);
+  
+    if (error) {
+      alert(error.message);
+      return;
+    }
+  
+    alert("Your message has been sent successfully!");
+  
+    setName("");
+    setEmail("");
+    setProjectType("");
+    setMessage("");
+  }
+  
   return (
     <>
       <Navbar />
@@ -36,35 +81,46 @@ export default function ContactPage() {
 
               <form className="space-y-6">
 
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
-                />
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
+              />
 
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
-                />
+              <input
+                type="email"
+                placeholder="Your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
+              />
 
-                <input
-                  type="text"
-                  placeholder="Project Type"
-                  className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
-                />
+              <input
+                type="text"
+                placeholder="Project Type"
+                value={projectType}
+                onChange={(e) => setProjectType(e.target.value)}
+                className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
+              />
 
-                <textarea
-                  placeholder="Tell us about your project..."
-                  rows={6}
-                  className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
-                />
+              <textarea
+                placeholder="Tell us about your project..."
+                rows={6}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="w-full p-4 rounded-xl bg-black border border-zinc-700 focus:outline-none"
+              />
 
-                <button
-                  className="bg-orange-500 hover:bg-orange-600 transition px-8 py-4 rounded-xl font-semibold text-lg"
-                >
-                  Send Message
-                </button>
+              <button
+                type="button"
+                onClick={sendMessage}
+                disabled={loading}
+                className="bg-orange-500 hover:bg-orange-600 transition px-8 py-4 rounded-xl font-semibold text-lg disabled:opacity-50"
+              >
+                {loading ? "Sending..." : "Send Message"}
+              </button>
 
               </form>
 
@@ -84,17 +140,17 @@ export default function ContactPage() {
 
                   <div>
                     <p className="text-white font-semibold">Email</p>
-                    <p>buildtrack@email.com</p>
+                    <p>solotechcompany28@gmail.com</p>
                   </div>
 
                   <div>
                     <p className="text-white font-semibold">Phone</p>
-                    <p>+1 (555) 123-4567</p>
+                    <p>+231886898970</p>
                   </div>
 
                   <div>
                     <p className="text-white font-semibold">Location</p>
-                    <p>Sioux City, Iowa</p>
+                    <p>Monrovia, Liberia</p>
                   </div>
 
                   <div>

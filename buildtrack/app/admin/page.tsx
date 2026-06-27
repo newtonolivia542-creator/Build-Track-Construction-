@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 //import { supabase } from "@/lib/supabase";//
 import { supabase } from "../../lib/supabase";
+import Link from "next/link";
 
 export default function AdminPage() {
 
@@ -336,6 +337,8 @@ function startEdit(project: any) {
           </div>
 
           {/* CARD 2 */}
+          <Link href="/admin/messages">
+
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
 
             <h2 className="text-3xl font-bold">
@@ -347,6 +350,7 @@ function startEdit(project: any) {
             </p>
 
           </div>
+          </Link>
 
           {/* CARD 3 */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
