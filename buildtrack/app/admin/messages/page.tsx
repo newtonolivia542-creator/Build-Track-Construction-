@@ -36,6 +36,11 @@ export default function MessagesPage() {
     if (error) {
       console.error(error);
     } else {
+      setMessages(data || []);
+    }
+
+    setLoading(false);
+  }
   //OPEN REPLY FUNCTION//
   function openReply(message: any) {
     setSelectedMessage(message);
