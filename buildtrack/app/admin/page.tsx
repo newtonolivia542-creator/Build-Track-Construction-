@@ -2,6 +2,7 @@
 
 //import { useState } from "react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 //import { supabase } from "@/lib/supabase";//
@@ -23,6 +24,15 @@ export default function AdminPage() {
   const [messages, setMessages] = useState<any[]>([]);
   const [clients, setClients] = useState<any[]>([]);
 
+  const router = useRouter();
+
+//logout//
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  
+    router.push("/login");
+  }
+
   //=========LOADPROJECT FUNCTION =======//
 
   async function loadProjects() {
@@ -41,12 +51,23 @@ export default function AdminPage() {
   
     setLoading(false);
   }
-
   useEffect(() => {
-    loadProjects();
-    
-    loadMessages();
-    //loadClients();
+    async function checkUser() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+  
+      if (!session) {
+        router.push("/login");
+        return;
+      }
+  
+      loadProjects();
+      loadMessages();
+      //loadClients();
+    }
+  
+    checkUser();
   }, []);
 //=======LoadMessage=========//
 
@@ -228,17 +249,29 @@ function startEdit(project: any) {
       <Navbar />
 
       {/* HERO */}
-      <section className="pt-40 pb-16 text-center px-6">
+      <section className="pt-40 pb-16 px-6">
 
-        <h1 className="text-5xl font-bold mb-6">
-          Admin Dashboard
-        </h1>
+      <div className="max-w-7xl mx-auto">
 
-        <p className="text-zinc-400 text-xl max-w-3xl mx-auto">
-          Manage projects, upload images, and monitor construction updates.
-        </p>
+      <div className="flex justify-between items-start mb-16">
 
-        <div className="mt-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-10">
+        <div>
+          <h1 className="text-5xl font-bold">
+            Admin Dashboard
+          </h1>
+
+          <p className="text-zinc-400 text-xl mt-4">
+            Manage projects, upload images, and monitor construction updates.
+          </p>
+        </div>
+
+        <button
+          onClick={handleLogout}
+          className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-xl font-semibold transition"
+        >
+          Logout
+        </button>
+        </div>
 
   <h2 className="text-4xl font-bold mb-8">
     All Projects

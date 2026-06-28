@@ -19,6 +19,11 @@ interface Message {
 export default function MessagesPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [replyOpen, setReplyOpen] = useState(false);
+  //const [selectedMessage, setSelectedMessage] = useState<any>(null);
+  const [selectedMessage, setSelectedMessage] =
+    useState<Message | null>(null);
+  const [replyText, setReplyText] = useState("");
 
   async function loadMessages() {
     setLoading(true);
@@ -31,11 +36,110 @@ export default function MessagesPage() {
     if (error) {
       console.error(error);
     } else {
-      setMessages(data || []);
-    }
-
-    setLoading(false);
+  //OPEN REPLY FUNCTION//
+  function openReply(message: any) {
+    setSelectedMessage(message);
+    setReplyText("");
+    setReplyOpen(true);
   }
+
+  {replyOpen && selectedMessage && (
+
+    <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+    
+      <div className="bg-zinc-900 rounded-2xl p-8 w-full max-w-2xl">
+    
+        <h2 className="text-3xl font-bold mb-6">
+          Reply to {selectedMessage.name}
+        </h2>
+    
+        <p className="mb-3 text-zinc-400">
+          To:
+        </p>
+    
+        <div className="bg-black p-3 rounded mb-6">
+          {selectedMessage.email}
+        </div>
+    
+        <textarea
+          rows={8}
+          value={replyText}
+          onChange={(e)=>setReplyText(e.target.value)}
+          placeholder="Write your reply..."
+          className="w-full bg-black border border-zinc-700 rounded-xl p-4"
+        />
+    
+        <div className="flex justify-end gap-4 mt-6">
+    
+          <button
+            onClick={()=>setReplyOpen(false)}
+            className="bg-zinc-700 px-6 py-3 rounded-lg"
+          >
+            Cancel
+          </button>
+    
+          <button
+            onClick={sendReply}
+            className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-lg font-semibold"
+          >
+            Send Reply
+          </button>
+    
+        </div>
+    
+      </div>
+    
+    </div>
+    
+    )}
+
+    async function sendReply() {
+
+        if (!selectedMessage) return;
+      
+        const response = await fetch("/api/send-email", {
+      
+          method: "POST",
+      
+          headers: {
+            "Content-Type": "application/json",
+          },
+      
+          body: JSON.stringify({
+      
+            to: selectedMessage.email,
+      
+            subject: `Re: ${selectedMessage.subject}`,
+      
+            message: replyText,
+      
+          }),
+      
+        });
+      
+        /*if (response.ok) {
+      
+          alert("Reply sent!");
+      
+          setReplyOpen(false);
+      
+        } else {
+      
+          alert("Failed to send reply.");
+      
+        }
+      
+      }*/
+        if (response.ok) {
+            alert("Reply sent!");
+            setReplyOpen(false);
+          } else {
+            const error = await response.text();
+            console.error(error);
+            alert(error);
+          }
+        }
+
 //delete function//
   async function deleteMessage(id: number) {
     const confirmDelete = window.confirm(
@@ -152,6 +256,13 @@ export default function MessagesPage() {
                 <div className="flex gap-3">
 
                 <button
+                    onClick={() => openReply(msg)}
+                    className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg font-semibold transition"
+                >
+                    Reply
+                </button> 
+
+                <button
                     onClick={() => toggleRead(msg)}
                     className={`px-4 py-2 rounded-lg font-semibold transition ${
                     msg.is_read
@@ -176,9 +287,59 @@ export default function MessagesPage() {
             </div>
           )}
         </div>
+
       </main>
 
+{replyOpen && selectedMessage && (
+  <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
+
+    <div className="bg-zinc-900 rounded-2xl p-8 w-full max-w-2xl">
+
+      <h2 className="text-3xl font-bold mb-6">
+        Reply to {selectedMessage.name}
+      </h2>
+
+      <p className="mb-3 text-zinc-400">
+        To:
+      </p>
+
+      <div className="bg-black p-3 rounded mb-6">
+        {selectedMessage.email}
+      </div>
+
+      <textarea
+        rows={8}
+        value={replyText}
+        onChange={(e) => setReplyText(e.target.value)}
+        placeholder="Write your reply..."
+        className="w-full bg-black border border-zinc-700 rounded-xl p-4"
+      />
+
+      <div className="flex justify-end gap-4 mt-6">
+
+        <button
+          onClick={() => setReplyOpen(false)}
+          className="bg-zinc-700 px-6 py-3 rounded-lg"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={sendReply}
+          className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-lg font-semibold"
+        >
+          Send Reply
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
+
       <Footer />
-    </>
-  );
+      </>
+);
+  //);
 }
