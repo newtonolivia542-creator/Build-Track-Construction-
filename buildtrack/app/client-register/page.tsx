@@ -65,7 +65,24 @@ const { error: profileError } = await supabase
 if (profileError) {
   alert(profileError.message);
   return;
-}
+}*/
+
+      const { error: profileError } = await supabase
+        .from("profiles")
+        .upsert({
+            id: data.user.id,
+            full_name: fullName,
+            email,
+            phone,
+            address,
+            role: "client",
+            status: "Active",
+        });
+
+      if (profileError) {
+        alert(profileError.message);
+        return;
+        }
 
     alert("Account created! Please check your email to verify your account.");
 

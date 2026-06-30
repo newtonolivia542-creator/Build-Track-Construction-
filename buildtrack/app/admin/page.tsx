@@ -64,7 +64,7 @@ export default function AdminPage() {
   
       loadProjects();
       loadMessages();
-      //loadClients();
+      loadClients();
     }
   
     checkUser();
@@ -84,36 +84,32 @@ async function loadMessages() {
     setMessages(data || []);
   }
 }
+//LOAD CLIENT FUNCTION//
 
-//======aloadClients===========//
+    async function loadClients() {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("role", "client")
+        .eq("status", "Active");*/
+        
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*");
 
-/*async function loadClients() {
-  const { data, error } = await supabase
-    .from("clients")
-    .select("*")
-    .order("id", { ascending: false });
+      console.log("Clients:", data);
+      console.log("Error:", error);
 
-  if (error) {
-    console.error(error);
-  } else {
-    setClients(data || []);
-  }
-}*/
-/*async function loadClients() {
-  const { data, error } = await supabase
-    .from("clients")
-    .select("*");
+      if (error) {
+        alert(error.message);
+        console.error(error);
+        return;
+      }
 
-  console.log("Clients data:", data);
-  console.log("Clients error:", error);
+      setClients(data || []);
+    }
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
 
-  setClients(data || []);
-}*/
 //========DELETE PROJECT FUNCTION ==========//
 
       async function deleteProject(id: number) {
@@ -386,19 +382,22 @@ function startEdit(project: any) {
           </Link>
 
           {/* CARD 3 */}
+          <Link href="/admin/clients">
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 min-h-[220px] flex flex-col justify-between shadow-2xl">
 
-            <h2 className="text-3xl font-bold">
-              Active Clients
-            </h2>
+          <h2 className="text-2xl font-bold">
+            Active Clients
+          </h2>
 
             <p className="text-5xl font-bold text-orange-500 mt-6">
             {clients.length}
             </p>
 
           </div>
+          </Link>
 
         </div>
+    
 
 {editingId && (
   <div className="mt-16 bg-zinc-900 border border-zinc-800 rounded-3xl p-10 shadow-2xl">
