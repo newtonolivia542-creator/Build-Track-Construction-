@@ -49,14 +49,15 @@ export default function ClientRegister() {
     alert(profileError.message);
     return;
   }*/
- 
+
  // Wait for the trigger to create the profile
-await new Promise((resolve) => setTimeout(resolve, 1000));
+/*await new Promise((resolve) => setTimeout(resolve, 1000));
 
 const { error: profileError } = await supabase
   .from("profiles")
   .update({
     full_name: fullName,
+    email,
     phone,
     address,
   })

@@ -87,7 +87,7 @@ async function loadMessages() {
 //LOAD CLIENT FUNCTION//
 
     async function loadClients() {
-      const { data, error } = await supabase
+      /*const { data, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("role", "client")
