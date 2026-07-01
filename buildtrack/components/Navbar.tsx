@@ -18,11 +18,22 @@ export default function Navbar() {
           </div>
   
           {/* Button */}
-          <button className="bg-orange-500 hover:bg-orange-600 transition px-5 py-2 rounded-full text-white font-semibold">
+          
+          <Link
+            href="/client-login"
+            className="bg-orange-500 hover:bg-orange-600 transition px-5 py-2 rounded-full text-white font-semibold"
+          >
             Client Portal
-          </button>
+          </Link>
+          <Link
+            href="/admin-login"
+            className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl text-white font-semibold transition"
+          >
+            Admin Login
+          </Link>
   
         </div>
+
       </nav>
     );
   }
