@@ -26,15 +26,18 @@ export default function Navbar() {
           >
             Client Portal
           </Link>
+          
           <Link
             href="/admin"
             className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl text-white font-semibold transition"
           >
             Admin Login
           </Link>
+          
   
         </div>
 
+        
       </nav>
     );
   }

@@ -83,6 +83,8 @@ export default function ClientLoginPage() {
               Login
             </button>
 
+            
+
           </form>
 
           <div className="text-center mt-6">
@@ -90,6 +92,13 @@ export default function ClientLoginPage() {
             <button className="text-orange-400 hover:underline">
               Forgot Password?
             </button>
+
+          <Link
+            href="/client-register"
+            className="bg-orange-500 hover:bg-orange-300 hover:scale-105 transition duration-200 px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
+          >
+            Create an account 
+          </Link>
 
           </div>
 
