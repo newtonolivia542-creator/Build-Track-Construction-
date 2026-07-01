@@ -11,7 +11,7 @@ export default function AboutPage() {
       <br></br>
 
       {/* Hero Section */}
-      <section className="pt-84 pb-24 px-6">
+      <section className="pt-14 pb-24 px-6">
 
         <div className="max-w-5xl mx-auto text-center">
 

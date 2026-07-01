@@ -56,7 +56,7 @@ export default function ContactPage() {
         <br></br>
         <br></br>
         {/* HERO SECTION */}
-        <section className="pt-40 pb-20 text-center px-6">
+        <section className="pt-20 pb-20 text-center px-6">
           <h1 className="text-6xl font-bold mb-6">
             Contact BuildTrack
           </h1>

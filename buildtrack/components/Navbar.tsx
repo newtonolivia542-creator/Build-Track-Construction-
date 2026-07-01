@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Navbar() {
     return (
       <nav className="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
@@ -26,7 +27,7 @@ export default function Navbar() {
             Client Portal
           </Link>
           <Link
-            href="/admin-login"
+            href="/admin"
             className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl text-white font-semibold transition"
           >
             Admin Login
