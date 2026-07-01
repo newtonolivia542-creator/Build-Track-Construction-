@@ -54,10 +54,11 @@ export default function Hero() {
           transition={{ delay: 1.2, duration: 1 }}
           className="mt-8 flex justify-center gap-4 flex-wrap"
         >
-
-          <button className="bg-orange-500 hover:bg-orange-600 hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold shadow-xl">
+          <link>
+          href="/projects"
+          className="bg-orange-500 hover:bg-orange-600 hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
             View Projects
-          </button>
+          </link>
 
           <button className="border border-white hover:bg-white hover:text-black hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold">
             Get a Quote
