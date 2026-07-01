@@ -10,7 +10,7 @@ export default function Navbar() {
           </h1>
   
           {/* Navigation Links */}
-          <div className="hidden md:flex gap-8 text-white font-medium">
+          <div className="flex gap-8 text-white font-medium">
             <a href="/">Home</a>
             <a href="/projects">Projects</a>
             <a href="/services">Services</a>
@@ -19,17 +19,11 @@ export default function Navbar() {
           </div>
   
           {/* Button */}
-          
-          <Link
-            href="/client-login"
-            className="bg-orange-500 hover:bg-orange-600 transition px-5 py-2 rounded-full text-white font-semibold"
-          >
-            Client Portal
-          </Link>
+
           
           <Link
             href="/admin"
-            className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl text-white font-semibold transition"
+            className="bg-blue-200 hover:bg-blue-200 px-2 py-2 rounded-xl text-white font-semibold transition"
           >
             Admin Login
           </Link>

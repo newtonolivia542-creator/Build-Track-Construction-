@@ -62,9 +62,12 @@ export default function Hero() {
           <a href="/projects">Projects </a>
         </div>
 
-          <button className="border border-white hover:bg-white hover:text-black hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold">
-            Get a Quote
-          </button>
+          <Link
+            href="/client-login"
+            className="bg-orange-500 hover:bg-orange-600 hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
+          >
+            Client Portal
+          </Link>
 
         </motion.div>
 
