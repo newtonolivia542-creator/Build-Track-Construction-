@@ -2,6 +2,8 @@
  "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+
 
 export default function Hero() {
   return (
@@ -54,11 +56,11 @@ export default function Hero() {
           transition={{ delay: 1.2, duration: 1 }}
           className="mt-8 flex justify-center gap-4 flex-wrap"
         >
-          <link>
-          href="/projects"
-          className="bg-orange-500 hover:bg-orange-600 hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold shadow-xl"
-            View Projects
-          </link>
+        
+        <div className="bg-orange-500 hover:bg-orange-600 hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold shadow-xl">
+
+          <a href="/projects">Projects </a>
+        </div>
 
           <button className="border border-white hover:bg-white hover:text-black hover:scale-105 transition duration-300 px-8 py-4 rounded-full text-lg font-semibold">
             Get a Quote
