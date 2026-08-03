@@ -104,9 +104,12 @@ export default function ClientLoginPage() {
 
           <div className="text-center mt-6">
 
-            <button className="text-orange-400 hover:underline">
-              Forgot Password?
-            </button>
+        <Link
+          href="/forgot-password"
+          className="text-orange-400 hover:underline"
+        >
+          Forgot Password?
+        </Link>
 
           <Link
             href="/client-register"
