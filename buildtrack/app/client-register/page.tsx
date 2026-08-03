@@ -24,6 +24,10 @@ export default function ClientRegister() {
       password,
     });
 
+    console.log(data);
+    console.log("User:", data.user);
+    console.log("Session:", data.session);
+
     if (error) {
       alert(error.message);
       return;

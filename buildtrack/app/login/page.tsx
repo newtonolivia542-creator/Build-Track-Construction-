@@ -21,6 +21,10 @@ export default function LoginPage() {
       password,
     });
 
+    console.log("User:", data.user);
+    console.log("Session:", data.session);
+    console.log("Error:", error);
+
     setLoading(false);
 
     if (error) {
