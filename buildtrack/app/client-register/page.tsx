@@ -84,6 +84,22 @@ if (profileError) {
             status: "Active",
         });
 
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    console.log("Current Session:", session);
+
+    console.log({
+      id: data.user?.id,
+      full_name: fullName,
+      email,
+      phone,
+      address,
+      role: "client",
+      status: "Active",
+    });     
+       
       if (profileError) {
         alert(profileError.message);
         return;
